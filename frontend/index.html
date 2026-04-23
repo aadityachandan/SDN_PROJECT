@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDN Static Routing Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Computer Networks Lab</p>
+          <h1>Static Routing using an SDN Controller</h1>
+          <p class="summary">
+            A deterministic OpenFlow lab where the controller installs fixed forwarding
+            rules, traffic follows predefined paths, and route reinstall keeps behavior unchanged.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="metric">
+            <span class="metric-value">3</span>
+            <span class="metric-label">OpenFlow Switches</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">4</span>
+            <span class="metric-label">Hosts</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">8</span>
+            <span class="metric-label">Documented Paths</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Topology Overview</h2>
+          <p>Left-edge hosts forward through <code>s1 → s2 → s3</code> to reach the right edge.</p>
+        </div>
+        <div class="topology">
+          <div class="host-column">
+            <div class="node host">h1<br /><span>10.0.0.1</span></div>
+            <div class="node host">h2<br /><span>10.0.0.2</span></div>
+          </div>
+          <div class="link-cluster">
+            <div class="node switch">s1</div>
+            <div class="link"></div>
+            <div class="node switch core">s2</div>
+            <div class="link"></div>
+            <div class="node switch">s3</div>
+          </div>
+          <div class="host-column">
+            <div class="node host">h3<br /><span>10.0.0.3</span></div>
+            <div class="node host">h4<br /><span>10.0.0.4</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Static Paths</h2>
+            <p>Traffic uses these controller-defined paths every time.</p>
+          </div>
+          <div id="path-list" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Switch Flow Summary</h2>
+            <p>Each switch forwards using destination MAC based output ports.</p>
+          </div>
+          <div id="flow-list" class="list"></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Validation Checklist</h2>
+          <p>Use this sequence during the lab viva or final demo.</p>
+        </div>
+        <ol class="checklist">
+          <li>Start <code>ryu-manager src/controller/static_routing_controller.py</code>.</li>
+          <li>Launch <code>sudo python3 src/topology/static_topology.py</code>.</li>
+          <li>Run <code>pingall</code> and verify host-to-host connectivity.</li>
+          <li>Dump flows from <code>s1</code>, <code>s2</code>, and <code>s3</code>.</li>
+          <li>Reinstall the controller rules and rerun <code>python src/tools/validate_routes.py --compare-snapshot</code>.</li>
+        </ol>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
